@@ -3,15 +3,41 @@ using System.Globalization;
 using aprender.Entities;
 using aprender.Entities.enums;
 
+
+
 namespace aprender
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Aula122(); 
+     
+            Aula125(); // Herança e Polimorfismo, continua Aula 126
+            //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula125()
+        {
+            //BusinessAccount Account = new BusinessAccount(18691, "Juceran", 3641.57, 500);
+            //Console.WriteLine(Account.Balance);
+            //Account.Balance = 10; // não funciona pois esta protected, só altera nas subclasses que herdam
+
+            Account acc = new Account(186916, "Juceran", 0.0);
+            BusinessAccount bacc = new BusinessAccount(31584, "CetaSistemas", 3641.57, 500);
+
+            //upcasting
+            Account acc1 = bacc;
+            Account acc2 = new BusinessAccount(001, "Alex", 6497, 500);
+            Account acc3 = new SavingsAccount(1003, "Sofia", 0.0, 0.01);
+
+            //downcasting
+
+            BusinessAccount acc4 = (BusinessAccount)acc2;
+            acc4.Loan(102);
+            Console.WriteLine(acc4.Balance);
+
         }
 
         private static void Aula122()
