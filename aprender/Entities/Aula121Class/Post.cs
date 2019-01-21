@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace aprender.Entities
+namespace aprender.Entities.Aula121Class
 {
     class Post
     {

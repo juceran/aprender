@@ -1,4 +1,4 @@
-﻿namespace aprender.Entities
+﻿namespace aprender.Entities.Aula121Class
 {
     class Comment
     {

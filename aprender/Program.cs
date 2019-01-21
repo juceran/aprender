@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using aprender.Entities;
-using aprender.Entities.Aula122Class;
-using aprender.Entities.Aula132Class;
 using aprender.Entities.enums;
 
 
@@ -15,7 +12,7 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-            Aula132(); // exercicio proposto
+            //Aula132(); // exercicio proposto
             //Aula130(); //sobreposição
             //Aula125(); // Herança e Polimorfismo, continua Aula 126
             //Aula122(); 
@@ -68,7 +65,7 @@ namespace aprender
 
         private static void Aula130()
         {
-            List<Employee> List = new List<Employee>();
+            List<Entities.Aula130Class.Employee> List = new List<Entities.Aula130Class.Employee>();
             Console.Write("enter the number of employees: ");
             int n = int.Parse(Console.ReadLine());
 
@@ -88,16 +85,16 @@ namespace aprender
                 {
                     Console.Write("Adittional Charge: ");
                     double adittionalCharge = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                    List.Add(new OutsourcedEmployee(name, hour, valuePerHour, adittionalCharge));
+                    List.Add(new Entities.Aula130Class.OutsourcedEmployee(name, hour, valuePerHour, adittionalCharge));
                 }
                 else
                 {
-                    List.Add(new Employee(name, hour, valuePerHour));
+                    List.Add(new Entities.Aula130Class.Employee(name, hour, valuePerHour));
                 }
             }
             Console.WriteLine();
             Console.Write("Payment: ");
-            foreach (Employee emp in List)
+            foreach (Entities.Aula130Class.Employee emp in List)
             {
                 Console.WriteLine("Name: " + emp.Name + " - $ " + emp.Payment().ToString("f2", CultureInfo.InvariantCulture));
             }
@@ -109,13 +106,13 @@ namespace aprender
             //Console.WriteLine(Account.Balance);
             //Account.Balance = 10; // não funciona pois esta protected, só altera nas subclasses que herdam
 
-            Account acc = new Account(186916, "Juceran", 0.0);
-            BusinessAccount bacc = new BusinessAccount(31584, "CetaSistemas", 3641.57, 500);
+            Entities.Aula125Class.Account acc = new Entities.Aula125Class.Account(186916, "Juceran", 0.0);
+            Entities.Aula125Class.BusinessAccount bacc = new Entities.Aula125Class.BusinessAccount(31584, "CetaSistemas", 3641.57, 500);
 
             //upcasting
-            Account acc1 = bacc;
-            Account acc2 = new BusinessAccount(001, "Alex", 8000, 500);
-            Account acc3 = new SavingsAccount(1003, "Sofia", 8000, 0.01);
+            Entities.Aula125Class.Account acc1 = bacc;
+            Entities.Aula125Class.Account acc2 = new Entities.Aula125Class.BusinessAccount(001, "Alex", 8000, 500);
+            Entities.Aula125Class.Account acc3 = new Entities.Aula125Class.SavingsAccount(1003, "Sofia", 8000, 0.01);
 
             //aula 127 
             acc2.Withdraw(5);
@@ -125,7 +122,7 @@ namespace aprender
             Console.WriteLine(acc3.Balance);
 
             //downcasting
-            BusinessAccount acc4 = (BusinessAccount)acc2;
+            Entities.Aula125Class.BusinessAccount acc4 = (Entities.Aula125Class.BusinessAccount)acc2;
             acc4.Loan(102);
             Console.WriteLine(acc4.Balance);
 
@@ -133,17 +130,17 @@ namespace aprender
             //  acc3 é um SavingsAccount, tem que testar, porém essse metodo não é SEGURO
             */
             //BusinessAccount acc5 = (BusinessAccount)acc3;
-            if(acc3 is BusinessAccount)
+            if(acc3 is Entities.Aula125Class.BusinessAccount)
             {
-                BusinessAccount acc5 = (BusinessAccount)acc3;
+                Entities.Aula125Class.BusinessAccount acc5 = (Entities.Aula125Class.BusinessAccount)acc3;
                 acc5.Loan(200.00);
                 Console.WriteLine("lOAN!");
             }
 
-            if(acc3 is SavingsAccount)
+            if(acc3 is Entities.Aula125Class.SavingsAccount)
             {
-                SavingsAccount acc5 = (SavingsAccount)acc3;
-                SavingsAccount acc6 = acc3 as SavingsAccount; // outra forma de fazer o casting
+                Entities.Aula125Class.SavingsAccount acc5 = (Entities.Aula125Class.SavingsAccount)acc3;
+                Entities.Aula125Class.SavingsAccount acc6 = acc3 as Entities.Aula125Class.SavingsAccount; // outra forma de fazer o casting
                 acc5.UpdateBalance();
                 Console.WriteLine("update! ");
             }
@@ -162,8 +159,8 @@ namespace aprender
             Console.Write("Status: ");
             OrderStatus status = Enum.Parse<OrderStatus>(Console.ReadLine());
 
-            Client client = new Client(name, email, birthDate);
-            Order order = new Order(DateTime.Now, status, client);
+            Entities.Aula122Class.Client client = new Entities.Aula122Class.Client(name, email, birthDate);
+            Entities.Aula122Class.Order order = new Entities.Aula122Class.Order(DateTime.Now, status, client);
 
             Console.Write("How many items to this order? ");
             int n = int.Parse(Console.ReadLine());
@@ -192,9 +189,9 @@ namespace aprender
 
         private static void Aula121()
         {
-            Comment c1 = new Comment("Have a nice trip");
-            Comment c2 = new Comment("Wow that's awesome");
-            Post p1 = new Post(
+            Entities.Aula121Class.Comment c1 = new Entities.Aula121Class.Comment("Have a nice trip");
+            Entities.Aula121Class.Comment c2 = new Entities.Aula121Class.Comment("Wow that's awesome");
+            Entities.Aula121Class.Post p1 = new Entities.Aula121Class.Post(
                 DateTime.Parse("16/01/2019 16:01:44"),
                 "Traveling to New Zealand",
                 "I'm going to visit this wonderful country!",
@@ -204,10 +201,10 @@ namespace aprender
             p1.AddComment(c1);
             p1.AddComment(c2);
 
-            Comment c3 = new Comment("Good night");
-            Comment c4 = new Comment("May the force to be with you");
+            Entities.Aula121Class.Comment c3 = new Entities.Aula121Class.Comment("Good night");
+            Entities.Aula121Class.Comment c4 = new Entities.Aula121Class.Comment("May the force to be with you");
 
-            Post p2 = new Post(
+            Entities.Aula121Class.Post p2 = new Entities.Aula121Class.Post(
                   DateTime.Parse("16/01/2019 16:07:21"),
                 "Good night guys",
                 "See you tomorrow",
@@ -234,8 +231,8 @@ namespace aprender
             Console.Write("Base Salary: ");
             double baseSalary = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            Department dept = new Department(deptName);
-            Worker worker = new Worker(name, level, baseSalary, dept);
+            Entities.Aula122Class.Department dept = new Entities.Aula122Class.Department(deptName);
+            Entities.Aula118Class.Worker worker = new Entities.Aula118Class.Worker(name, level, baseSalary, dept);
 
             Console.Write("How many contracts to this worker? ");
             int n = int.Parse(Console.ReadLine());
@@ -250,7 +247,7 @@ namespace aprender
                 Console.Write("Duration (hours): ");
                 int hours = int.Parse(Console.ReadLine());
 
-                HourContract contract = new HourContract(date, valuePerHour, hours);
+                Entities.Aula118Class.HourContract contract = new Entities.Aula118Class.HourContract(date, valuePerHour, hours);
                 worker.AddContract(contract);
             }
 

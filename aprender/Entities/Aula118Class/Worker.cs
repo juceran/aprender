@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using aprender.Entities.enums;
 
-namespace aprender.Entities
+namespace aprender.Entities.Aula118Class
 {
     class Worker
     {
         public string Name { get; set; }
         public WorkerLevel Level { get; set; }
         public double BaseSalary { get; set; }
-        public Department Department { get; set; }
+        public Entities.Aula122Class.Department Department { get; set; }
         public List<HourContract> Contracts { get; set; } = new List<HourContract>();
 
         public Worker()
         { }
 
-        public Worker(string name, WorkerLevel level, double baseSalary, Department department)
+        public Worker(string name, WorkerLevel level, double baseSalary, Entities.Aula122Class.Department department)
         {
             Name = name;
             Level = level;

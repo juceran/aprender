@@ -1,4 +1,4 @@
-﻿namespace aprender.Entities
+﻿namespace aprender.Entities.Aula122Class
 {
     class Department
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace aprender.Entities
+namespace aprender.Entities.Aula118Class
 {
     class HourContract
     {
