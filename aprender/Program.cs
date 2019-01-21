@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using aprender.Entities;
 using aprender.Entities.enums;
+
 
 
 
@@ -11,11 +13,48 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-     
-            Aula125(); // Herança e Polimorfismo, continua Aula 126
+            Aula130(); //sobreposição
+            //Aula125(); // Herança e Polimorfismo, continua Aula 126
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula130()
+        {
+            List<Employee> List = new List<Employee>();
+            Console.Write("enter the number of employees: ");
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= n; i++)
+            {
+                Console.WriteLine($"Employee #{i} data: ");
+                Console.Write("Outsourced (y/n)? ");
+                char ch = char.Parse(Console.ReadLine());
+                Console.Write("Name: ");
+                string name = Console.ReadLine();
+                Console.Write("Hours: ");
+                int hour = int.Parse(Console.ReadLine());
+                Console.Write("Value per Hours: ");
+                double valuePerHour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+                if(ch == 'Y' || ch == 'y')
+                {
+                    Console.Write("Adittional Charge: ");
+                    double adittionalCharge = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    List.Add(new OutsourcedEmployee(name, hour, valuePerHour, adittionalCharge));
+                }
+                else
+                {
+                    List.Add(new Employee(name, hour, valuePerHour));
+                }
+            }
+            Console.WriteLine();
+            Console.Write("Payment: ");
+            foreach (Employee emp in List)
+            {
+                Console.WriteLine("Name: " + emp.Name + " - $ " + emp.Payment().ToString("f2", CultureInfo.InvariantCulture));
+            }
         }
 
         private static void Aula125()
@@ -29,15 +68,39 @@ namespace aprender
 
             //upcasting
             Account acc1 = bacc;
-            Account acc2 = new BusinessAccount(001, "Alex", 6497, 500);
-            Account acc3 = new SavingsAccount(1003, "Sofia", 0.0, 0.01);
+            Account acc2 = new BusinessAccount(001, "Alex", 8000, 500);
+            Account acc3 = new SavingsAccount(1003, "Sofia", 8000, 0.01);
+
+            //aula 127 
+            acc2.Withdraw(5);
+            acc3.Withdraw(5);
+
+            Console.WriteLine(acc2.Balance);
+            Console.WriteLine(acc3.Balance);
 
             //downcasting
-
             BusinessAccount acc4 = (BusinessAccount)acc2;
             acc4.Loan(102);
             Console.WriteLine(acc4.Balance);
 
+            /*  o downcasting não da erro, na compilação mas da ao executar
+            //  acc3 é um SavingsAccount, tem que testar, porém essse metodo não é SEGURO
+            */
+            //BusinessAccount acc5 = (BusinessAccount)acc3;
+            if(acc3 is BusinessAccount)
+            {
+                BusinessAccount acc5 = (BusinessAccount)acc3;
+                acc5.Loan(200.00);
+                Console.WriteLine("lOAN!");
+            }
+
+            if(acc3 is SavingsAccount)
+            {
+                SavingsAccount acc5 = (SavingsAccount)acc3;
+                SavingsAccount acc6 = acc3 as SavingsAccount; // outra forma de fazer o casting
+                acc5.UpdateBalance();
+                Console.WriteLine("update! ");
+            }
         }
 
         private static void Aula122()

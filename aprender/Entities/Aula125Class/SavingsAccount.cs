@@ -22,5 +22,12 @@ namespace aprender.Entities
         {
             Balance += Balance * InterestRate;
         }
+
+        public override void Withdraw(double amount)
+        {
+            base.Withdraw(amount);
+            //Balance -= amount;
+            Balance -= amount * 0.01;
+        }
     }
 }
