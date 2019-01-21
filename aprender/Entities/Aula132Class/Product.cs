@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Globalization;
 
-namespace aprender.Entities.Aula122Class
+namespace aprender.Entities.Aula132Class
 {
     class Product
     {
@@ -17,6 +15,13 @@ namespace aprender.Entities.Aula122Class
         {
             Name = name;
             Price = price;
+        }
+
+        public virtual string priceTag()
+        {
+            return Name
+                + " $ "
+                + Price.ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }

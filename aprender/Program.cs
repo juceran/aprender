@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using aprender.Entities;
+using aprender.Entities.Aula122Class;
+using aprender.Entities.Aula132Class;
 using aprender.Entities.enums;
 
 
@@ -13,11 +15,55 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-            Aula130(); //sobreposição
+            Aula132(); // exercicio proposto
+            //Aula130(); //sobreposição
             //Aula125(); // Herança e Polimorfismo, continua Aula 126
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula132()
+        {
+            List<Entities.Aula132Class.Product> list = new List<Entities.Aula132Class.Product>();
+
+            Console.Write("Enter the number of products: ");
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= n; i++)
+            {
+                Console.WriteLine($"Product #{i} data:");
+                Console.Write("Common, used or imported (c/u/i)? ");
+                char type = char.Parse(Console.ReadLine());
+                Console.Write("Name: ");
+                string name = Console.ReadLine();
+                Console.Write("Price: ");
+                double price = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+                if(type == 'c')
+                {
+                    list.Add(new Entities.Aula132Class.Product(name, price));
+                }
+                else if ( type == 'u')
+                {
+                    Console.Write("Manufacture date (DD/MM/YYYY): ");
+                    DateTime date = DateTime.Parse(Console.ReadLine());
+                    list.Add(new Entities.Aula132Class.UsedProduct(name, price, date));
+                }
+                else
+                {
+                    Console.Write("Customs fee: ");
+                    double customsFee = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    list.Add(new Entities.Aula132Class.ImportedProduct(name, price, customsFee));
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("PRICE TAGS:");
+            foreach (Entities.Aula132Class.Product prod in list)
+            {
+                Console.WriteLine(prod.priceTag());
+            }
         }
 
         private static void Aula130()
@@ -130,11 +176,11 @@ namespace aprender
                 Console.Write("Product price: ");
                 double price = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-                Product product = new Product(productName, price);
+                Entities.Aula122Class.Product product = new Entities.Aula122Class.Product(productName, price);
                 Console.Write("Quantity: ");
                 int quantity = int.Parse(Console.ReadLine());
 
-                OrderItem orderItem = new OrderItem(quantity, price, product);
+                Entities.Aula122Class.OrderItem orderItem = new Entities.Aula122Class.OrderItem(quantity, price, product);
 
                 order.AddItem(orderItem);
 

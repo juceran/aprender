@@ -4,7 +4,7 @@ using aprender.Entities.enums;
 using System.Text;
 using System.Globalization;
 
-namespace aprender.Entities
+namespace aprender.Entities.Aula122Class
 {
     class Order
     {
