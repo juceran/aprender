@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using aprender.Entities.Aula135Class;
+using aprender.Entities.Exceptions;
 using aprender.Entities.enums;
+using System.IO;
 
 
 
@@ -13,7 +14,9 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-            Aula136(); // Exercicio Proposto
+            Aula142(); //exercicio resolvido
+            //Aula140(); //exception
+            //Aula136(); // Exercicio Proposto
             //Aula135(); //class e method => abstract
             //Aula132(); // exercicio proposto
             //Aula130(); //sobreposição
@@ -21,6 +24,89 @@ namespace aprender
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula142()
+        {
+            try
+            {
+                Console.Write("Room number: ");
+                int number = int.Parse(Console.ReadLine());
+                Console.Write("check-in date (dd/mm/yyyy)");
+                DateTime checkIn = DateTime.Parse(Console.ReadLine());
+                Console.Write("check-out date (dd/mm/yyyy)");
+                DateTime checkOut = DateTime.Parse(Console.ReadLine());
+
+                aprender.Entities.Aula142Class.Reservation reservation = new Entities.Aula142Class.Reservation(number, checkIn, checkOut);
+                Console.WriteLine("Reservation: " + reservation);
+
+                Console.WriteLine();
+                Console.WriteLine("Enter data to update the reservation:");
+                Console.Write("Check-in date (dd/MM/yyyy): ");
+                checkIn = DateTime.Parse(Console.ReadLine());
+                Console.Write("Check-out date (dd/MM/yyyy): ");
+                checkOut = DateTime.Parse(Console.ReadLine());
+
+                reservation.Updatedates(checkIn, checkOut);
+
+                Console.WriteLine("Reservation: " + reservation);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Error in format: " + e.Message);
+            }
+            catch (DomainException e)
+            {
+                Console.WriteLine("Error in reservation: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected error: " + e.Message);
+            }
+        }
+
+        private static void Aula140()
+        {
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream(@"Z:\temp\data.txt", FileMode.Open);
+                StreamReader sr = new StreamReader(fs);
+                string line = sr.ReadLine();
+                Console.WriteLine(line);
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Close();
+                }
+            }
+
+            try
+            {
+                Console.Write("entre com o dividendo: ");
+                int n1 = int.Parse(Console.ReadLine());
+                Console.Write("entre com o divisor: ");
+                int n2 = int.Parse(Console.ReadLine());
+
+                Console.Write("resultado: ");
+                int result = n1 / n2;
+                Console.WriteLine(result);
+                Console.ReadLine();
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine("Erro! " + e.Message);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Error1 " + e.Message);
+            }
         }
 
         private static void Aula136()
@@ -39,7 +125,7 @@ namespace aprender
                 string name = Console.ReadLine();
                 Console.Write("Anual Income: ");
                 double anualincome = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-               
+
                 if (ch == 'i')
                 {
                     Console.Write("Health expenditures: ");
@@ -61,14 +147,14 @@ namespace aprender
             {
                 Console.WriteLine(
                     item.Name
-                    +": $ "
+                    + ": $ "
                     + item.TaxesPaid().ToString("f2", CultureInfo.InvariantCulture)
                     );
                 sum += item.TaxesPaid();
             }
 
             Console.WriteLine();
-            Console.WriteLine("total Taxes: "+ sum.ToString("f2", CultureInfo.InvariantCulture));
+            Console.WriteLine("total Taxes: " + sum.ToString("f2", CultureInfo.InvariantCulture));
             Console.ReadLine();
         }
 
@@ -87,7 +173,7 @@ namespace aprender
                 Console.Write("Color (Black/Blue/Red): ");
                 Color color = Enum.Parse<Color>(Console.ReadLine());
 
-                if(ch == 'r')
+                if (ch == 'r')
                 {
                     Console.Write("Width: ");
                     double width = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
@@ -108,7 +194,7 @@ namespace aprender
             Console.WriteLine("Shape areas:");
             foreach (aprender.Entities.Aula135Class.Shape shape in list)
             {
-                Console.WriteLine("Area: " + shape.Area().ToString("f2", CultureInfo.InvariantCulture) );
+                Console.WriteLine("Area: " + shape.Area().ToString("f2", CultureInfo.InvariantCulture));
             }
             Console.ReadLine();
         }
@@ -130,11 +216,11 @@ namespace aprender
                 Console.Write("Price: ");
                 double price = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-                if(type == 'c')
+                if (type == 'c')
                 {
                     list.Add(new Entities.Aula132Class.Product(name, price));
                 }
-                else if ( type == 'u')
+                else if (type == 'u')
                 {
                     Console.Write("Manufacture date (DD/MM/YYYY): ");
                     DateTime date = DateTime.Parse(Console.ReadLine());
@@ -174,7 +260,7 @@ namespace aprender
                 Console.Write("Value per Hours: ");
                 double valuePerHour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-                if(ch == 'Y' || ch == 'y')
+                if (ch == 'Y' || ch == 'y')
                 {
                     Console.Write("Adittional Charge: ");
                     double adittionalCharge = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
@@ -223,14 +309,14 @@ namespace aprender
             //  acc3 é um SavingsAccount, tem que testar, porém essse metodo não é SEGURO
             */
             //BusinessAccount acc5 = (BusinessAccount)acc3;
-            if(acc3 is Entities.Aula125Class.BusinessAccount)
+            if (acc3 is Entities.Aula125Class.BusinessAccount)
             {
                 Entities.Aula125Class.BusinessAccount acc5 = (Entities.Aula125Class.BusinessAccount)acc3;
                 acc5.Loan(200.00);
                 Console.WriteLine("lOAN!");
             }
 
-            if(acc3 is Entities.Aula125Class.SavingsAccount)
+            if (acc3 is Entities.Aula125Class.SavingsAccount)
             {
                 Entities.Aula125Class.SavingsAccount acc5 = (Entities.Aula125Class.SavingsAccount)acc3;
                 Entities.Aula125Class.SavingsAccount acc6 = acc3 as Entities.Aula125Class.SavingsAccount; // outra forma de fazer o casting
@@ -330,7 +416,7 @@ namespace aprender
             Console.Write("How many contracts to this worker? ");
             int n = int.Parse(Console.ReadLine());
 
-            for(int i=1; i<= n; i++)
+            for (int i = 1; i <= n; i++)
             {
                 Console.WriteLine($"Enter #{i} contract data: ");
                 Console.Write("Date (DD/MM/YYYY): ");
@@ -348,8 +434,8 @@ namespace aprender
             Console.Write("Enter month and year to calculate income (MM/YYYY) ");
             string monthAndYear = Console.ReadLine();
             int year = int.Parse(monthAndYear.Substring(3));
-            int month = int.Parse(monthAndYear.Substring(0,2));
-           
+            int month = int.Parse(monthAndYear.Substring(0, 2));
+
             Console.WriteLine("Name : " + worker.Name);
             Console.WriteLine("Department: " + worker.Department.Name);
             Console.WriteLine("Income for " + monthAndYear + ": " + worker.Income(year, month).ToString("F2", CultureInfo.InvariantCulture));
