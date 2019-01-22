@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using aprender.Entities.Aula135Class;
 using aprender.Entities.enums;
 
 
@@ -12,12 +13,54 @@ namespace aprender
     {
         static void Main(string[] args)
         {
+            Aula135(); //class e method => abstract
             //Aula132(); // exercicio proposto
             //Aula130(); //sobreposição
             //Aula125(); // Herança e Polimorfismo, continua Aula 126
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula135()
+        {
+            List<aprender.Entities.Aula135Class.Shape> list = new List<Entities.Aula135Class.Shape>();
+
+            Console.Write("Enter the number of sahpes: ");
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= n; i++)
+            {
+                Console.WriteLine($"Shape #{i} data: ");
+                Console.Write("Rectangle or circle (r/c) ?");
+                char ch = char.Parse(Console.ReadLine());
+                Console.Write("Color (Black/Blue/Red): ");
+                Color color = Enum.Parse<Color>(Console.ReadLine());
+
+                if(ch == 'r')
+                {
+                    Console.Write("Width: ");
+                    double width = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    Console.Write("Height: ");
+                    double height = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    list.Add(new aprender.Entities.Aula135Class.Rectangle(width, height, color));
+                }
+                else
+                {
+                    Console.Write("Radius: ");
+                    double radius = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    list.Add(new aprender.Entities.Aula135Class.Circle(radius, color));
+                }
+            }
+
+            Console.WriteLine("----------------");
+            Console.ReadLine();
+            Console.WriteLine("Shape areas:");
+            foreach (aprender.Entities.Aula135Class.Shape shape in list)
+            {
+                Console.WriteLine("Area: " + shape.Area().ToString("f2", CultureInfo.InvariantCulture) );
+            }
+            Console.ReadLine();
         }
 
         private static void Aula132()
