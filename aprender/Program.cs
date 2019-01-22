@@ -13,13 +13,63 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-            Aula135(); //class e method => abstract
+            Aula136(); // Exercicio Proposto
+            //Aula135(); //class e method => abstract
             //Aula132(); // exercicio proposto
             //Aula130(); //sobreposição
             //Aula125(); // Herança e Polimorfismo, continua Aula 126
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula136()
+        {
+            List<aprender.Entities.Aula136Class.People> list = new List<Entities.Aula136Class.People>();
+
+            Console.Write("enter the number of tax payers: ");
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= n; i++)
+            {
+                Console.WriteLine($"tax payer #{i}: ");
+                Console.Write("Individual or company? (i/c)");
+                char ch = char.Parse(Console.ReadLine());
+                Console.Write("Name: ");
+                string name = Console.ReadLine();
+                Console.Write("Anual Income: ");
+                double anualincome = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+               
+                if (ch == 'i')
+                {
+                    Console.Write("Health expenditures: ");
+                    double healthexpenditures = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    list.Add(new aprender.Entities.Aula136Class.Individual(name, anualincome, healthexpenditures));
+                }
+                else
+                {
+                    Console.Write("Employees: ");
+                    int employee = int.Parse(Console.ReadLine());
+                    list.Add(new aprender.Entities.Aula136Class.Company(name, anualincome, employee));
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("TAXES PAID:");
+            double sum = 0.0;
+            foreach (aprender.Entities.Aula136Class.People item in list)
+            {
+                Console.WriteLine(
+                    item.Name
+                    +": $ "
+                    + item.TaxesPaid().ToString("f2", CultureInfo.InvariantCulture)
+                    );
+                sum += item.TaxesPaid();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("total Taxes: "+ sum.ToString("f2", CultureInfo.InvariantCulture));
+            Console.ReadLine();
         }
 
         private static void Aula135()
