@@ -14,7 +14,8 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-            Aula142(); //exercicio resolvido
+            Aula145(); //exercicio de fixação exceptions
+            //Aula142(); //exercicio resolvido
             //Aula140(); //exception
             //Aula136(); // Exercicio Proposto
             //Aula135(); //class e method => abstract
@@ -24,6 +25,44 @@ namespace aprender
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula145()
+        {
+            try
+            {
+                
+                Console.WriteLine("Enter account data: ");
+                Console.Write("number: ");
+                int number = int.Parse(Console.ReadLine());
+                Console.Write("holder: ");
+                string holder = Console.ReadLine();
+                Console.Write("Initial Balance: ");
+                double initialBalance = double.Parse(Console.ReadLine());
+                Console.Write("Enter withdraw limit: ");
+                double limit = double.Parse(Console.ReadLine());
+
+                aprender.Entities.Aula145Class.Account account = new Entities.Aula145Class.Account(number, holder, initialBalance, limit);
+
+                Console.Write("Enter amount for withdraw: ");
+                double amount = double.Parse(Console.ReadLine());
+
+                account.WithDraw(amount);
+
+                Console.WriteLine();
+                Console.WriteLine("New Balance: " + account.Balance);
+                Console.ReadLine();
+
+            }
+            catch(DomainException e)
+            {
+                Console.WriteLine("Operação bloqueada " + e.Message);
+            }
+            catch(Exception e )
+            {
+                Console.WriteLine("erro" + e.Message);
+            }
+            Console.ReadLine();
         }
 
         private static void Aula142()
