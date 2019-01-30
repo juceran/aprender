@@ -14,7 +14,11 @@ namespace aprender
     {
         static void Main(string[] args)
         {
-            Aula145(); //exercicio de fixação exceptions
+            Aula196(); //exercicio de fixação
+            //Aula194(); //exercicio anterior com INTERFACES
+            //Aula191(); //exercicio resolvido sem usar interfaces
+            //Aula189(); //exercicio de fixação
+            //Aula145(); //exercicio de fixação exceptions
             //Aula142(); //exercicio resolvido
             //Aula140(); //exception
             //Aula136(); // Exercicio Proposto
@@ -25,6 +29,122 @@ namespace aprender
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula196()
+        {
+            Console.WriteLine("Enter contract data:");
+            Console.Write("Number: ");
+            int contractNumber = int.Parse(Console.ReadLine());
+            Console.Write("Date (dd/MM/yyyy): ");
+            DateTime contractDate = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            Console.Write("Contract value: ");
+            double contractValue = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Write("Enter number of installments: ");
+            int months = int.Parse(Console.ReadLine());
+
+            Entities.Aula196Class.Contract myContract = new Entities.Aula196Class.Contract(contractNumber, contractDate, contractValue);
+
+            Entities.Aula196Class.ContractService contractService = new Entities.Aula196Class.ContractService(new Entities.Aula196Class.PaypalService());
+            contractService.ProcessContract(myContract, months);
+            foreach (Entities.Aula196Class.Installment installment in myContract.Installments)
+            {
+                Console.WriteLine(installment);
+            }
+            Console.ReadLine();
+        }
+
+        private static void Aula194()
+        {
+            Console.WriteLine("Dados do aluguel do Veículo");
+            Console.Write("Modelo do Veículo: ");
+            string modelo = Console.ReadLine();
+
+            Console.Write("UF da locação: ");
+            string uf = Console.ReadLine();
+
+            Console.Write("Saida (dd/MM/yyy hh:mm)");
+            DateTime saida = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            Console.Write("Retorno (dd/MM/yyy hh:mm)");
+            DateTime retorno = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            Entities.Aula194Class.Locacao locacao = new Entities.Aula194Class.Locacao(saida, retorno, new Entities.Aula194Class.Veiculo( modelo));
+            Console.Write("Preço por hora: ");
+            double hora = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            Console.Write("Preço por dia: ");
+            double dia = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            Entities.Aula194Class.LocacaoServico locacaoServico = new Entities.Aula194Class.LocacaoServico(hora, dia, new Entities.Aula194Class.AlagoasTaxaServico());
+            locacaoServico.ProcessoImposto(locacao);
+
+            Console.WriteLine("Resumo");
+            Console.WriteLine(locacao.Imposto);
+            Console.ReadLine();
+        }
+
+        private static void Aula191()
+        {
+            Console.WriteLine("Enter rental data");
+            Console.Write("Car Model: ");
+            string model = Console.ReadLine();
+
+            Console.Write("Pickup (dd/MM/yyy hh:mm)");
+            DateTime start = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            Console.Write("Return (dd/MM/yyy hh:mm)");
+            DateTime finish = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            Entities.Aula191Class.CarRental carRental = new Entities.Aula191Class.CarRental(start, finish, new Entities.Aula191Class.Vehicle(model));
+
+            Console.Write("Enter price per hour: ");
+            double hour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            Console.Write("Enter price per day: ");
+            double day = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            Entities.Aula191Class.RentalService rentalService = new Entities.Aula191Class.RentalService(hour, day);
+            rentalService.ProcessInvoice(carRental);
+
+            Console.WriteLine("INVOICE");
+            Console.WriteLine(carRental.Invoice);
+            Console.ReadLine();
+        }
+
+        private static void Aula189()
+        {
+            //Console.Write("Enter file full path: ");
+            string sourceFilePath = @"z:\desenvolvimento\aprender\arquivos\189_arquivo.csv"; //Console.ReadLine();
+
+            try
+            {
+                string[] lines = File.ReadAllLines(sourceFilePath);
+                string sourceFolderPath = Path.GetDirectoryName(sourceFilePath);
+                string targetFolderPath = sourceFolderPath + @"\out";
+                string targetFilePath = targetFolderPath + @"\summary.csv";
+
+                Directory.CreateDirectory(targetFolderPath);
+                using (StreamWriter sw = File.AppendText(targetFilePath))
+                {
+                    foreach (string line in lines)
+                    {
+                        string[] fields = line.Split(',');
+                        string name = fields[0];
+                        double price = double.Parse(fields[1], CultureInfo.InvariantCulture);
+                        int quantity = int.Parse(fields[2]);
+
+                        Entities.Aula189Class.Product prod = new Entities.Aula189Class.Product(name, price, quantity);
+
+                        sw.WriteLine(prod.Name + "," + prod.Total().ToString("F2", CultureInfo.InvariantCulture));
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("Erro");
+                Console.WriteLine( e.Message );
+            }
         }
 
         private static void Aula145()
