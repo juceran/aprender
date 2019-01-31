@@ -1,20 +1,24 @@
-﻿using System;
+﻿using aprender.Entities.enums;
+using aprender.Entities.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using aprender.Entities.Exceptions;
-using aprender.Entities.enums;
 using System.IO;
+using System.Linq;
+
 
 
 
 
 namespace aprender
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Aula196(); //exercicio de fixação
+            Aula218(); //exercicio de fixação LINQ
+            //Aula199(); //INTERFACE 
+            //Aula196(); //exercicio de fixação
             //Aula194(); //exercicio anterior com INTERFACES
             //Aula191(); //exercicio resolvido sem usar interfaces
             //Aula189(); //exercicio de fixação
@@ -29,6 +33,73 @@ namespace aprender
             //Aula122(); 
             //Aula121(); //exercicio resolvido
             //Aula118(); //aula118 à aula120
+        }
+
+        private static void Aula218()
+        {
+            Console.WriteLine("Enter full file path: ");
+            string path = @"Z:\Desenvolvimento\aprender\arquivos\funcionarios.txt"; //  Console.ReadLine();
+            Console.WriteLine(path);
+            Console.ReadLine();
+
+            List<Entities.Aula218Class.Funcionario> funcionarios = new List<Entities.Aula218Class.Funcionario>();
+
+            using (StreamReader sr = File.OpenText(path))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string[] arr = sr.ReadLine().Split(',');
+                    string nome = arr[0];
+                    double salario = double.Parse(arr[1], CultureInfo.InvariantCulture);
+                    string email = arr[2];
+
+                    funcionarios.Add(new Entities.Aula218Class.Funcionario(nome, salario, email));
+                }
+            }
+
+            Console.Write("Enter salary: ");
+            double salarioMedio = double.Parse(Console.ReadLine());
+
+            IEnumerable<string> r1 = funcionarios
+                        .Where(p => p.Salario > salarioMedio)
+                        .OrderByDescending(p => p.Nome)
+                        .Select(p => p.Email);
+
+            foreach (string item in r1)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadLine();
+        }
+
+        private static void Aula199()
+        {
+            string path = @"Z:\Desenvolvimento\aprender\arquivos\pessoas.txt";
+
+            try
+            {
+                using (StreamReader sr = File.OpenText(path))
+                {
+                    List<string> list = new List<string>();
+                    while (!sr.EndOfStream)
+                    {
+                        list.Add(sr.ReadLine());
+                    }
+                    list.Sort();
+                    foreach (string item in list)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    Console.ReadLine();
+                }
+            }
+            catch (IOException e)
+            {
+
+                Console.WriteLine("an error occurred!");
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+            }
         }
 
         private static void Aula196()
@@ -69,7 +140,7 @@ namespace aprender
             Console.Write("Retorno (dd/MM/yyy hh:mm)");
             DateTime retorno = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
 
-            Entities.Aula194Class.Locacao locacao = new Entities.Aula194Class.Locacao(saida, retorno, new Entities.Aula194Class.Veiculo( modelo));
+            Entities.Aula194Class.Locacao locacao = new Entities.Aula194Class.Locacao(saida, retorno, new Entities.Aula194Class.Veiculo(modelo));
             Console.Write("Preço por hora: ");
             double hora = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
@@ -143,7 +214,7 @@ namespace aprender
             catch (IOException e)
             {
                 Console.WriteLine("Erro");
-                Console.WriteLine( e.Message );
+                Console.WriteLine(e.Message);
             }
         }
 
@@ -151,7 +222,7 @@ namespace aprender
         {
             try
             {
-                
+
                 Console.WriteLine("Enter account data: ");
                 Console.Write("number: ");
                 int number = int.Parse(Console.ReadLine());
@@ -174,11 +245,11 @@ namespace aprender
                 Console.ReadLine();
 
             }
-            catch(DomainException e)
+            catch (DomainException e)
             {
                 Console.WriteLine("Operação bloqueada " + e.Message);
             }
-            catch(Exception e )
+            catch (Exception e)
             {
                 Console.WriteLine("erro" + e.Message);
             }
